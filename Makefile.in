@@ -1,0 +1,50 @@
+CC=@CC@
+CFLAGS=@CFLAGS@
+LIBS=@LIBS@
+LDFLAGS=@LDFLAGS@ -Wl,--export-dynamic -rdynamic -pipe
+LD=@CC@
+BIN=hbs
+OBJECTS=array.o botnet.o channel.o chanserv.o chattr.tab.o cmd.o config.o console.o irc.o log.o main.o module.o nick.o server.o server_handlers.o server_queues.o string.o timer.o user.o utils.o xml.o xpoll.o
+PAXCTL=@PAXCTL@
+
+.PHONY: all clean distclean
+
+all: $(BIN)
+	$(MAKE) -C commands all
+
+$(OBJECTS): hbs.h
+
+chattr.tab.c: table_gen
+	./table_gen > chattr.tab.c
+	rm -f table_gen
+
+table_gen: table_gen.o
+	$(LD) $(LDFLAGS) -o $@ $<
+
+$(BIN): $(OBJECTS)
+	$(LD) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBS)
+	if [ "$(PAXCTL)" != "" ]; then $(PAXCTL) -prms $@; fi
+
+clean:
+	rm -f *~
+	rm -f *.o
+	rm -f $(BIN)
+	$(MAKE) -C commands clean
+
+distclean: clean
+	rm -f */Makefile Makefile config.status config.log config.h core
+
+tarpackage:
+	cd ..
+	tar --exclude=*.svn* -cvzf hbs.tar.bz2 HBS/*.in HBS/config* HBS/TODO HBS/WARRANTY HBS/LICENSE HBS/*.c HBS/*.h HBS/commands/ HBS/convert.pl
+
+install:
+	if [ "$(DEST)" = "" ]; then echo "Try make install DEST=destdir"; exit 1; fi
+	if [ -e $(DEST)/hbs ]; then mv $(DEST)/hbs $(DEST)/hbs.old; fi
+	if [ -d $(DEST)/commands ]; then mv $(DEST)/commands $(DEST)/commands.old; fi
+	mkdir -p $(DEST)/commands
+	install --mode=0755 hbs $(DEST)/hbs
+	for n in *.example; do install --mode 0644 $$n $(DEST)/$$n; done
+	if [ -e $(DEST)/modules ]; then mv $(DEST)/modules $(DEST)/modules.old; fi
+	for n in commands/*.so; do install --mode=0755 $$n $(DEST)/$$n; basename $$n .so >> $(DEST)/modules; done
+	echo "Done! Installed bot in $(DEST)"

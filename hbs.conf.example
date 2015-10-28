@@ -1,0 +1,38 @@
+<bot>
+	<section name="global">
+		<variable name="channelfile">channel.conf</variable>
+		<variable name="userfile">user.conf</variable>
+		<variable name="logfile">hbs.log</variable>
+		<variable name="trigger">HBS</variable>
+		<variable name="modulepath">commands</variable>
+		<variable name="modules">modules</variable>
+		<variable name="pidfile">hbs.pid</variable>
+	</section>
+	<section name="console">
+		<variable name="host">0.0.0.0</variable>
+		<variable name="port">3333</variable>
+		<variable name="hubhost"></variable>
+		<variable name="hubport"></variable>
+		<variable name="password">changeme</variable>
+		<variable name="myname">HBS</variable>
+	</section>
+	<section name="chanserv">
+		<variable name="user">changeme</variable>
+		<variable name="pass"><![CDATA[changeme]]></variable>
+	</section>
+	<section name="server_common">
+		<variable name="nicks">2</variable>
+		<variable name="nick0">HBS</variable>
+		<variable name="nick1">HBS12</variable>
+		<variable name="user">HBS</variable>
+		<variable name="realname"><![CDATA[I couldn't be bothered to read config file]]></variable>
+		<variable name="servers">0</variable>
+		<variable name="umodes">+ixR</variable>
+	</section>
+	<section name="server0">
+		<variable name="server">irc.network.tld</variable>
+		<variable name="port">6667</variable>
+		<variable name="msec">1500</variable>
+		<variable name="lines">2</variable>
+	</section>
+</bot>

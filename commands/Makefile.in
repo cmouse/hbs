@@ -1,0 +1,19 @@
+CC=@CC@
+LD=@CC@
+CFLAGS=@CFLAGS@
+LIBS=
+LDFLAGS=@LDFLAGS@ -shared -nostartfiles
+COMMANDS=opvoice user chanmod kick misc ban conwrapper whois topic relay meeb quiz
+
+.PHONY: all clean $(COMMANDS)
+
+all: $(COMMANDS)
+
+clean:
+	rm -Rf *~
+	for n in $(COMMANDS); do if [ -d $$n ]; then make -C $$n clean; fi; done
+
+$(COMMANDS):
+	if [ -d $@ ]; then \
+		LD='$(LD)' LDFLAGS='$(LDFLAGS)' CC='$(CC)' CFLAGS='$(CFLAGS) -I../../' $(MAKE) -C $@ all;\
+	fi

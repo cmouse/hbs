@@ -1,0 +1,28 @@
+URGENT!!
+
+Check and fix PART & QUIT code for missing nick/channel cleanup!
+
+
+Fix BOTNET linkup code. Does not seem to work.
+ - ACCEPT
+  - Ask username, make sure valid username (_new)
+  - Ask password, match against network pw (_auth)
+  - Say version, must be replied with version (_preok)
+  - State OK 
+
+/* protocol for botnet */
+
+/*
+tokens:
+
+ message text - write text to console
+ addchan channel owner - add channel with owner
+ count bot - count channels
+ passreq - password request
+ ping - ping
+
+replytokens:
+ mycount to from number - n. of channels
+ pong - pong
+
+*/

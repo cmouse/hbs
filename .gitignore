@@ -30,3 +30,10 @@
 
 # Debug files
 *.dSYM/
+
+# Autoconf
+Makefile
+autom4te.cache/**
+
+# Customs
+commands/Makefile
