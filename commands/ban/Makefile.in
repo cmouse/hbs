@@ -1,0 +1,19 @@
+OBJECTS=banlist.o permban.o ban.o unban.o ban_module.o stick.o unstick.o
+LIBRARY=ban.so
+LIBS=
+
+.PHONY: all objects clean
+
+all: $(LIBRARY)
+
+$(LIBRARY): objects
+	$(LD) $(LDFLAGS) -o ../$@ $(OBJECTS) $(LIBS)
+
+objects: $(OBJECTS)
+
+$(OBJECTS): ../../hbs.h
+
+clean:
+	rm -f *~
+	rm -f ../$(LIBRARY)
+	rm -f *.o

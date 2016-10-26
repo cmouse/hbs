@@ -1,0 +1,19 @@
+OBJECTS=op.o deop.o voice.o devoice.o opvoice.o
+LIBRARY=opvoice.so
+LIBS=
+
+.PHONY: all objects clean
+
+all: $(LIBRARY)
+
+$(LIBRARY): objects
+	$(LD) $(LDFLAGS) -o ../$@ $(OBJECTS) $(LIBS)
+
+objects: $(OBJECTS)
+
+$(OBJECTS): ../../hbs.h
+
+clean:
+	rm -f *~
+	rm -f ../$(LIBRARY)
+	rm -f *.o

@@ -1,0 +1,19 @@
+OBJECTS=memory.o txrx.o weed.o misc.o params.o smack.o auth.o google.o lamercontrol.o calc.o seen.o
+LIBRARY=misc.so
+LIBS=
+
+.PHONY: all objects clean
+
+all: $(LIBRARY)
+
+$(LIBRARY): objects
+	$(LD) $(LDFLAGS) -o ../$@ $(OBJECTS) $(LIBS)
+
+objects: $(OBJECTS)
+
+$(OBJECTS): ../../hbs.h
+
+clean:
+	rm -f *~
+	rm -f ../$(LIBRARY)
+	rm -f *.o
