@@ -24,7 +24,11 @@ TMP_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS -pie -fpie"
 
 AC_MSG_CHECKING([Whether $CC accepts -pie -fpie])
-AC_COMPILE_IFELSE(AC_LANG_SOURCE(), [AC_MSG_RESULT([yes])], [CFLAGS=$TMP_CFLAGS; AC_MSG_RESULT([no])])
+AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM([[ ]],[[ ]])],
+	[AC_MSG_RESULT(yes)],
+	[CFLAGS=$TMP_CFLAGS; AC_MSG_RESULT([no])]
+)
 
 unset TMP_CFLAGS
 
@@ -32,7 +36,11 @@ TMP_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS -fPIC"
 
 AC_MSG_CHECKING([Whether $CC accepts -fPIC])
-AC_COMPILE_IFELSE(AC_LANG_SOURCE(), [LDFLAGS="$LDFLAGS -fPIC"; AC_MSG_RESULT([yes])], [CFLAGS=$TMP_CFLAGS; AC_MSG_RESULT([no])])
+AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM([[ ]],[[ ]])],
+	[CFLAGS="$CFLAGS -fPIC"; AC_MSG_RESULT([yes])],
+	[CFLAGS=$TMP_CFLAGS; AC_MSG_RESULT([no])]
+)
 
 unset TMP_CFLAGS
 
@@ -74,7 +82,20 @@ AC_CHECK_FUNCS([endpwent gettimeofday inet_ntoa memmove memset socket strcasecmp
 # HBS_CHOOSE_MODULES
 
 AC_CONFIG_FILES([Makefile
-                 commands/Makefile])
+commands/Makefile
+commands/ban/Makefile
+commands/chanmod/Makefile
+commands/conwrapper/Makefile
+commands/invite/Makefile
+commands/kick/Makefile
+commands/misc/Makefile
+commands/opvoice/Makefile
+commands/quiz/Makefile
+commands/test/Makefile
+commands/topic/Makefile
+commands/user/Makefile
+commands/whois/Makefile
+])
 		 
 AC_OUTPUT
 
