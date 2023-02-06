@@ -42,7 +42,7 @@ void ban_command_banlist (NICK * nick, CHANNEL * channel, const char *cmd,
 	    {
 	      strcpy (tbuf, "permanent");
 	    }
-	  puttext ("NOTICE %s :[%2d]: %s by %s (%s)\r\n", nick->nick, ++t,
+	  puttext ("NOTICE %s :[%2zu]: %s by %s (%s)\r\n", nick->nick, ++t,
 		   channel->ibans[i].mask, channel->ibans[i].placedby, tbuf);
 	}
     }
@@ -56,7 +56,7 @@ void ban_command_banlist (NICK * nick, CHANNEL * channel, const char *cmd,
 	{
 	  if (ban_channel_has_iban (channel, channel->bans[i].mask))
 	    continue;
-	  puttext ("NOTICE %s :[%2d]: %s by %s\r\n", nick->nick, ++t,
+	  puttext ("NOTICE %s :[%2zu]: %s by %s\r\n", nick->nick, ++t,
 		   channel->bans[i].mask, channel->bans[i].placedby);
 	}
     }
