@@ -16,6 +16,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 */
 #include "hbs.h"
+#include <sys/stat.h>
 
 /**
  * What we need for server? 
