@@ -1187,6 +1187,7 @@ console_command_restart (CONSOLE * console, const char *cmd,
       argv = main_get_argv ();
       sleep (2);
       execve (argv[0], argv, environ);
+      /* fall-through */
     default:
       raise (SIGQUIT);
     }
@@ -1309,6 +1310,7 @@ console_bot_bnrestart (CONSOLE * console, const char *cmd,
 	  argv = main_get_argv ();
 	  sleep (2);
 	  execve (argv[0], argv, environ);
+	  /* fall-through */
 	default:
 	  raise (SIGQUIT);
 	}
