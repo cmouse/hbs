@@ -41,7 +41,7 @@ void server_setup(void)
       server_common.nicks = malloc(sizeof(char *) * server_common.nnicks);
       for (i = 0; i < server_common.nnicks; i++)
         {
-          snprintf(key, 7, "nick%d", i);
+          snprintf(key, 7, "nick%zu", i);
           server_common.nicks[i] =
             strdup(config_getval("server_common", key));
         }
@@ -53,7 +53,7 @@ void server_setup(void)
   /* Get servers */
   for (i = 0; i < servers; i++)
     {
-      snprintf(key, 9, "server%d", i);
+      snprintf(key, 9, "server%zu", i);
       server_add(config_getval(key, "server"),
                  config_getval(key, "port"),
                  config_getval(key, "pass"),
