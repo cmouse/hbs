@@ -77,6 +77,7 @@ char *strchr (), *strrchr ();
 #include <libxml/tree.h>
 
 #include <openssl/crypto.h>
+#include <openssl/evp.h>
 #include <openssl/sha.h>
 #include <openssl/md5.h>
 

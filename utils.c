@@ -474,10 +474,8 @@ char *fill_template (const char *template)
  */
 void md5sum (const char *src, size_t srclen, char *dest)
 {
-  MD5_CTX ctx;
-  MD5_Init (&ctx);
-  MD5_Update (&ctx, (const unsigned char *) src, srclen);
-  MD5_Final ((unsigned char *) dest, &ctx);
+  unsigned int dstlen __attribute__((unused));
+  EVP_Digest(src, srclen, (unsigned char *)dest, &dstlen, EVP_md5(), NULL);
 }
 
 /**
@@ -487,15 +485,9 @@ void md5sum (const char *src, size_t srclen, char *dest)
  */
 char *sha1sum (const char *src)
 {
-  unsigned char result[SHA_DIGEST_LENGTH];
-  char *rv;
-  SHA_CTX ctx;
-  memset (result, 0, sizeof result);
-  SHA1_Init (&ctx);
-  SHA1_Update (&ctx, (const unsigned char *) src, strlen (src));
-  SHA1_Final (result, &ctx);
-  rv = malloc (SHA_DIGEST_LENGTH);
-  memcpy (rv, result, SHA_DIGEST_LENGTH);
+  unsigned int dstlen __attribute__((unused));
+  char *rv = malloc (SHA_DIGEST_LENGTH);
+  EVP_Digest(src, strlen(src), (unsigned char *)rv, &dstlen, EVP_sha1(), NULL);
   return rv;
 }
 
