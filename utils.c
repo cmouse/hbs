@@ -51,9 +51,11 @@ int match (const char *mask, const char *string)
       case '\\':
 	if (*m == '?' || *m == '*')
 	  ch = *m++;
+        /* fall-through */
       default:
 	if (tolower (*s) != tolower (ch))
 	  return 1;
+        break;
       case '?':
 	if (!*s++)
 	  return 1;
@@ -70,12 +72,14 @@ got_star:
       case '?':
 	if (!*s++)
 	  return 1;
+        break;
       case '*':
 	bm = m;
 	continue;		/* while */
       case '\\':
 	if (*m == '?' || *m == '*')
 	  ch = *m++;
+        /* fall-through */
       default:
 	goto break_while;	/* C is structured ? */
       };
@@ -98,6 +102,7 @@ break_while:
 	case '\\':
 	  if (*m == '?' || *m == '*')
 	    ch = *m++;
+          /* fall-through */
 	default:
 	  if (tolower (*s) != tolower (ch))
 	    {
@@ -108,6 +113,7 @@ break_while:
 	      s = bs;
 	      goto got_star;
 	    };
+          /* fall-through */
 	case '?':
 	  if (!*s++)
 	    return 1;
@@ -140,9 +146,11 @@ int rfc_match (const char *mask, const char *string)
       case '\\':
 	if (*m == '?' || *m == '*')
 	  ch = *m++;
+        /* fall-through */
       default:
 	if (ToLower (*s) != ToLower (ch))
 	  return 1;
+        break;
       case '?':
 	if (!*s++)
 	  return 1;
@@ -159,12 +167,14 @@ got_star:
       case '?':
 	if (!*s++)
 	  return 1;
+        break;
       case '*':
 	bm = m;
 	continue;		/* while */
       case '\\':
 	if (*m == '?' || *m == '*')
 	  ch = *m++;
+        /* fall-through */
       default:
 	goto break_while;	/* C is structured ? */
       };
@@ -187,6 +197,7 @@ break_while:
 	case '\\':
 	  if (*m == '?' || *m == '*')
 	    ch = *m++;
+          /* fall-through */
 	default:
 	  if (ToLower (*s) != ToLower (ch))
 	    {
@@ -197,6 +208,7 @@ break_while:
 	      s = bs;
 	      goto got_star;
 	    };
+          break;
 	case '?':
 	  if (!*s++)
 	    return 1;
