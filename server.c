@@ -372,7 +372,7 @@ int server_check_ob(void)
     (unsigned long)server_current->ob.lr.tv_sec * 1000000 +
     server_current->ob.lr.tv_usec;
   /* Check if ob needs resetting */
-  if (cmsec - vmsec > server_current->ob.msec * 1000)
+  if ((long)cmsec - (long)vmsec > server_current->ob.msec * 1000)
     {
       /* reset */
       server_current->ob.clines = 0;
