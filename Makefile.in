@@ -1,7 +1,7 @@
 CC=@CC@
-CFLAGS=@CFLAGS@
+CFLAGS=@CFLAGS@ -flto -fpie
 LIBS=@LIBS@
-LDFLAGS=@LDFLAGS@ -Wl,--export-dynamic -rdynamic -pipe
+LDFLAGS=@LDFLAGS@ -Wl,--export-dynamic -rdynamic -pipe -flto -pie
 LD=@CC@
 BIN=hbs
 OBJECTS=array.o botnet.o channel.o chanserv.o chattr.tab.o cmd.o config.o console.o irc.o log.o main.o module.o nick.o server.o server_handlers.o server_queues.o string.o timer.o user.o utils.o xml.o xpoll.o
@@ -19,10 +19,13 @@ chattr.tab.c: table_gen
 	rm -f table_gen
 
 table_gen: table_gen.o
-	$(LD) $(LDFLAGS) -o $@ $<
+	libtool --mode=link $(LD) $(LDFLAGS) -o $@ $<
+
+.c.o:
+	libtool --mode=compile $(CC) $(CFLAGS) -c -o $@ $<
 
 $(BIN): $(OBJECTS)
-	$(LD) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBS)
+	libtool --mode=link $(LD) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBS)
 	if [ "$(PAXCTL)" != "" ]; then $(PAXCTL) -prms $@; fi
 
 clean:
