@@ -5,7 +5,7 @@
 #define QUIZCHAN "#advice.quiz"
 
 const struct module_info_s quiz_info_s;
-static long last_q = 0;
+static unsigned long last_q = 0;
 static char quiz_a[512] = { 0 };
 static int quiz_enabled = 0;
 
@@ -124,7 +124,7 @@ void quiz_command_quiz (NICK * nick, CHANNEL * channel, const char *cmd,
       if ((cptr = strchr (quiz_a, '\r')))
 	*cptr = '\0';
       puttext
-	("PRIVMSG %s :Quiz question (%d seconds, answer is %d chars): %s",
+	("PRIVMSG %s :Quiz question (%d seconds, answer is %zu chars): %s",
 	 channel->channel, QUIZTIME, strlen (quiz_a), q);
       timer_register (TIME + QUIZTIME, quiz_stop_quiz, (void *) r);
     }
