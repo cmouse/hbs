@@ -832,7 +832,7 @@ struct channel_ban_s *channel_check_ban(CHANNEL *c, NICK *nick) {
 
 struct channel_ban_s *channel_check_ban_mask(CHANNEL *c, const char *mask) {
   struct channel_ban_s *ban;
-  int i;
+  unsigned int i;
   ban = NULL;
   for(i=0;i<c->nbans;i++) {
     if (!rfc_match(c->bans[i].mask,mask)) {
