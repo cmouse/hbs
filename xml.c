@@ -96,7 +96,7 @@ const char *xmlAttrGetValue (xmlAttrPtr ptr)
 	{
 	  if (ptr->children->type == XML_TEXT_NODE)
 	    {
-	      return ptr->children->content;
+	      return (const char*)ptr->children->content;
 	    }
 	}
     }
@@ -111,7 +111,7 @@ const char *xmlNodeGetValue (xmlNodePtr ptr)
 	{
 	  if (ptr->children->type == XML_TEXT_NODE)
 	    {
-	      return ptr->children->content;
+	      return (const char*)ptr->children->content;
 	    }
 	}
     }
@@ -121,21 +121,21 @@ const char *xmlNodeGetValue (xmlNodePtr ptr)
 char *xmlNodeGetLat1Value (xmlNodePtr ptr)
 {
   const char *UTF8ptr;
-  char *rv;
+  unsigned char *rv;
 #if SIZEOF_SIZE_T == SIZEOF_UNSIGNED_INT
   size_t len, ilen;
 #else
-  unsigned int len, ilen;
+  int len, ilen;
 #endif
   if ((UTF8ptr = xmlNodeGetValue (ptr)) == NULL)
     return NULL;
-  len = xmlStrlen (UTF8ptr) + 1;
+  len = xmlStrlen ((const unsigned char*)UTF8ptr) + 1;
   rv = malloc (len);
   ilen = len;
-  if (UTF8Toisolat1 (rv, &len, UTF8ptr, &ilen) < 0)
+  if (UTF8Toisolat1 (rv, &len, (const unsigned char*)UTF8ptr, &ilen) < 0)
     {
       free (rv);
       return NULL;
     }
-  return rv;
+  return (char*)rv;
 }
